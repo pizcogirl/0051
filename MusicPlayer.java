@@ -18,15 +18,18 @@ public class MusicPlayer
 {
     // The current player. It might be null.
     private AdvancedPlayer player;
-    
+    // Show if theres any file playing or not
+    private boolean playing;
+
     /**
      * Constructor for objects of class MusicFilePlayer
      */
     public MusicPlayer()
     {
         player = null;
+        playing = false;
     }
-    
+
     /**
      * Play a part of the given file.
      * The method returns once it has finished playing.
@@ -36,6 +39,7 @@ public class MusicPlayer
     {
         try {
             setupPlayer(filename);
+            playing = true;
             player.play(500);
         }
         catch(JavaLayerException e) {
@@ -43,9 +47,10 @@ public class MusicPlayer
         }
         finally {
             killPlayer();
+            playing = false;
         }
     }
-    
+
     /**
      * Start playing the given audio file.
      * The method returns once the playing has been started.
@@ -55,32 +60,35 @@ public class MusicPlayer
     {
         try {
             setupPlayer(filename);
+            playing = true;
             Thread playerThread = new Thread() {
-                public void run()
-                {
-                    try {
-                        player.play(5000);
+                    public void run()
+                    {
+                        try {
+                            player.play(5000);
+                        }
+                        catch(JavaLayerException e) {
+                            reportProblem(filename);
+                        }
+                        finally {
+                            killPlayer();
+                            playing = false;
+                        }
                     }
-                    catch(JavaLayerException e) {
-                        reportProblem(filename);
-                    }
-                    finally {
-                        killPlayer();
-                    }
-                }
-            };
+                };
             playerThread.start();
         }
         catch (Exception ex) {
             reportProblem(filename);
         }
     }
-    
+
     public void stop()
     {
         killPlayer();
+        playing = false;
     }
-    
+
     /**
      * Set up the player ready to play the given file.
      * @param filename The name of the file to play.
@@ -108,10 +116,10 @@ public class MusicPlayer
      * @return An input stream for the file.
      */
     private InputStream getInputStream(String filename)
-        throws IOException
+    throws IOException
     {
         return new BufferedInputStream(
-                    new FileInputStream(filename));
+            new FileInputStream(filename));
     }
 
     /**
@@ -120,7 +128,7 @@ public class MusicPlayer
      * @return An audio device.
      */
     private AudioDevice createAudioDevice()
-        throws JavaLayerException
+    throws JavaLayerException
     {
         return FactoryRegistry.systemRegistry().createAudioDevice();
     }
@@ -137,7 +145,7 @@ public class MusicPlayer
             }
         }
     }
-    
+
     /**
      * Report a problem playing the given file.
      * @param filename The file being played.
@@ -147,4 +155,11 @@ public class MusicPlayer
         System.out.println("There was a problem playing: " + filename);
     }
 
+    /**
+     * Check if theres actually any file playing
+     */
+    public boolean isPlaying()
+    {
+        return playing;
+    }
 }

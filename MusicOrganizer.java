@@ -188,10 +188,22 @@ public class MusicOrganizer
     }
     
     /**
-     * Set the value of the elngth of the given track
+     * Set the value of the length of the given track
      */
     public void setLengthOf(int index, String length)
     {
         tracks.get(index).setLength(length);
     }
+    
+    /**
+     * Check if theres a file being played
+     */
+    public void isPlaying()
+    {
+        if (player.isPlaying())
+        {
+            System.out.println("Se esta reproduciendo una canción");
+        }
+    }
+    
 }
