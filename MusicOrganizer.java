@@ -186,4 +186,12 @@ public class MusicOrganizer
             }
         }
     }
+    
+    /**
+     * Set the value of the elngth of the given track
+     */
+    public void setLengthOf(int index, String length)
+    {
+        tracks.get(index).setLength(length);
+    }
 }

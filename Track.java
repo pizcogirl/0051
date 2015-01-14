@@ -15,6 +15,8 @@ public class Track
     private String filename;
     // Count the number of times a file is played
     private int playCount;
+    // The track's length
+    private String length;
     
     /**
      * Constructor for objects of class Track.
@@ -22,9 +24,9 @@ public class Track
      * @param title The track's title.
      * @param filename The track file. 
      */
-    public Track(String artist, String title, String filename)
+    public Track(String artist, String title, String filename, String length)
     {
-        setDetails(artist, title, filename);
+        setDetails(artist, title, filename, length);
         playCount = 0;
     }
     
@@ -36,7 +38,8 @@ public class Track
      */
     public Track(String filename)
     {
-        setDetails("unknown", "unknown", filename);
+        setDetails("unknown", "unknown", filename, "unknown");
+        playCount = 0;
     }
     
     /**
@@ -72,7 +75,7 @@ public class Track
      */
     public String getDetails()
     {
-        return artist + ": " + title +  "(Played: " + playCount + ")  (file: " + filename + ")";
+        return artist + ": " + title + "(Length: " + length +  ") (Played: " + playCount + ")  (file: " + filename + ")";
     }
     
     /**
@@ -81,11 +84,12 @@ public class Track
      * @param title The track's title.
      * @param filename The track file. 
      */
-    private void setDetails(String artist, String title, String filename)
+    private void setDetails(String artist, String title, String filename, String length)
     {
         this.artist = artist;
         this.title = title;
         this.filename = filename;
+        this.length = length;
     }
     
     /**
@@ -102,6 +106,22 @@ public class Track
     public void increasePlayCount()
     {
         playCount++;
+    }
+    
+    /**
+     * Return the length of the track
+     */
+    public String getLength()
+    {
+        return length;
+    }
+    
+    /**
+     * Set the value of the length of the track
+     */
+    public void setLength(String length)
+    {
+        this.length = length;
     }
     
 }
