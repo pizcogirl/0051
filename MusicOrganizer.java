@@ -170,4 +170,17 @@ public class MusicOrganizer
             addTrack(track);
         }
     }
+    
+    /**
+     * Find tracks with the given string in the title
+     */
+    public void findInTitle(String searchString)
+    {
+        // Recorre la lista de tracks y comprueba los titulos
+        for(Track track : tracks) {
+            if(track.getTitle().contains(searchString)) {
+                System.out.println(track.getDetails());
+            }
+        }
+    }
 }
