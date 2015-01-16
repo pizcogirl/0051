@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Collections;
 
 /**
  * A class to hold details of audio tracks.
@@ -204,7 +205,10 @@ public class MusicOrganizer
      */
     public void setLengthOf(int index, String length)
     {
-        tracks.get(index).setLength(length);
+        if (indexValid(index))
+        {
+            tracks.get(index).setLength(length);
+        }
     }
 
     /**
@@ -264,7 +268,7 @@ public class MusicOrganizer
             }
         }
     }
-    
+
     /**
      * Play a file from the library as random
      */
@@ -277,7 +281,51 @@ public class MusicOrganizer
         // Reproduce la cancion del indice indicado
         playTrack(index);
     }
-    
-    
+
+    /**
+     * Play a sample for every song in the library, as random order
+     */
+    public void playShuffle()
+    {
+        // Creamos un random, cambiamos la semilla para que represente mejor la aleatoriedad
+        Random ranIndex = new Random(System.currentTimeMillis());
+        Collections.shuffle(tracks, ranIndex);
+        int index = 0;
+        while (index < tracks.size())
+        {
+            // Reproduce cada cancion de la lista
+            Track playTrack = tracks.get(index);
+            System.out.println(playTrack.getDetails());
+            playTrack.increasePlayCount();
+            player.playSample(playTrack.getFilename());
+            index++;
+        }
+    }
+
+    /**
+     * Play a sample for every song in the library, as random order. 2v
+     */
+    public void playShuffle2()
+    {
+        // Crea la copia de la lista
+        ArrayList<Track> copia = new ArrayList<Track>();
+        copia = (ArrayList)tracks.clone();
+        while (copia.size() >0)
+        {
+            // Creamos un random, cambiamos la semilla para que represente mejor la aleatoriedad
+            Random ranIndex = new Random(System.currentTimeMillis());
+            int index = ranIndex.nextInt(copia.size() + 1);;
+            // reproducimos la cancion
+            Track playTrack = copia.get(index);
+            System.out.println(playTrack.getDetails());
+            playTrack.increasePlayCount();
+            player.playSample(playTrack.getFilename());
+            // Incrementamos el numero de reproducciones en la lista original
+            int tempIndexOfTrack = tracks.indexOf(playTrack);
+            tracks.get(tempIndexOfTrack).increasePlayCount();
+            // Borramos la cancion de la lista
+            copia.remove(playTrack);
+        }
+    }
 
 }
