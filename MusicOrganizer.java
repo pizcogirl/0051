@@ -215,7 +215,7 @@ public class MusicOrganizer
             System.out.println("Se esta reproduciendo una canción");
         }
     }
-    
+
     /**
      * List all tracks using an iterator
      */
@@ -228,7 +228,7 @@ public class MusicOrganizer
             System.out.println(track.getDetails());
         }
     }
-    
+
     /**
      * Remove the tracks from the given artist
      */
@@ -238,8 +238,25 @@ public class MusicOrganizer
         while (it.hasNext())
         {
             Track track = it.next();
-            
+            // Recorre la lista, si la cancion contiene ese artista, la borra
             if (track.getArtist().contains(artist))
+            {
+                it.remove();
+            }
+        }
+    }
+
+    /**
+     * Remove the track with the given title
+     */
+    public void removeByTitle(String title)
+    {
+        Iterator<Track> it = tracks.iterator();
+        while (it.hasNext())
+        {
+            Track track = it.next();
+            // Recorre la lista, si la cancion contiene ese titulo, la borra
+            if (track.getTitle().contains(title))
             {
                 it.remove();
             }
