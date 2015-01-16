@@ -277,7 +277,7 @@ public class MusicOrganizer
         // Creamos un random, cambiamos la semilla para que represente mejor la aleatoriedad
         Random ranIndex = new Random(System.currentTimeMillis());
         // Creamos un index al que damos como valor el numero random
-        int index = ranIndex.nextInt(tracks.size() + 1);
+        int index = ranIndex.nextInt(tracks.size());
         // Reproduce la cancion del indice indicado
         playTrack(index);
     }
@@ -310,11 +310,11 @@ public class MusicOrganizer
         // Crea la copia de la lista
         ArrayList<Track> copia = new ArrayList<Track>();
         copia = (ArrayList)tracks.clone();
-        while (copia.size() >0)
+        while (copia.size() > 0)
         {
             // Creamos un random, cambiamos la semilla para que represente mejor la aleatoriedad
             Random ranIndex = new Random(System.currentTimeMillis());
-            int index = ranIndex.nextInt(copia.size() + 1);;
+            int index = ranIndex.nextInt(copia.size());;
             // reproducimos la cancion
             Track playTrack = copia.get(index);
             System.out.println(playTrack.getDetails());
