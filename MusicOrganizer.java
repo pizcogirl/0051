@@ -18,14 +18,15 @@ public class MusicOrganizer
     private TrackReader reader;
 
     /**
-     * Create a MusicOrganizer
+     * Create a MusicOrganizer. Add as parameter the directory where the
+     * music is stores
      */
-    public MusicOrganizer()
+    public MusicOrganizer(String folder)
     {
         tracks = new ArrayList<Track>();
         player = new MusicPlayer();
         reader = new TrackReader();
-        readLibrary("audio");
+        readLibrary(folder);
         System.out.println("Music library loaded. " + getNumberOfTracks() + " tracks.");
         System.out.println();
     }
@@ -262,5 +263,7 @@ public class MusicOrganizer
             }
         }
     }
+    
+    
 
 }
